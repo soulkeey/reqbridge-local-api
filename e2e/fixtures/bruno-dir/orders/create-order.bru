@@ -1,0 +1,26 @@
+meta {
+  name: Create Order
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/v2/orders
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "orderId": "{{orderId}}",
+    "amount": 1900
+  }
+}
+
+assert {
+  res.status: eq 201
+}

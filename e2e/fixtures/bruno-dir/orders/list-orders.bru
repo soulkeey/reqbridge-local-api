@@ -1,0 +1,19 @@
+meta {
+  name: List Orders
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/v2/orders?status=paid
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}
