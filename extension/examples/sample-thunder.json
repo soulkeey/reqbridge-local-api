@@ -1,0 +1,23 @@
+{
+  "collectionName": "ReqBridge Thunder Sample",
+  "folders": [
+    { "_id": "fld_orders", "name": "Orders" }
+  ],
+  "requests": [
+    {
+      "name": "Get Order",
+      "containerId": "fld_orders",
+      "method": "GET",
+      "url": "https://api.example.com/v2/orders/{id}",
+      "params": [
+        { "name": "id", "value": "ord_101", "isPath": true },
+        { "name": "expand", "value": "items", "isPath": false }
+      ],
+      "headers": [
+        { "name": "Accept", "value": "application/json" }
+      ],
+      "auth": { "type": "bearer", "bearer": "{{apiToken}}" },
+      "tests": [{ "type": "res-code", "value": "200" }]
+    }
+  ]
+}

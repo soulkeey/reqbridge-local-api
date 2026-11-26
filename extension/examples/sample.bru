@@ -1,0 +1,21 @@
+meta {
+  name: Get Order Health
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://api.example.com/v2/health
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{apiToken}}
+}
+
+tests {
+  test("healthy", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}
