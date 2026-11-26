@@ -1,0 +1,345 @@
+{
+  "name": "reqbridge-local-api",
+  "displayName": "ReqBridge: Postman & Thunder Client to .http / OpenAPI + CSV Batch Runner",
+  "description": "Lossless local migration from Postman v2.1, Thunder Client, Bruno (.bru), OpenAPI 3.1 & cURL to Git-native .http + OpenAPI 3.1, plus unlimited CSV batch runs and Staging-vs-Prod schema diff.",
+  "version": "0.1.0",
+  "publisher": "soulkey-tools",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#0B1220",
+    "theme": "dark"
+  },
+  "homepage": "https://reqbridge-local-api.pages.dev/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soulkeey/reqbridge-local-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/soulkeey/reqbridge-local-api/issues"
+  },
+  "engines": {
+    "vscode": "^1.96.0",
+    "node": ">=20.0.0"
+  },
+  "categories": [
+    "Testing",
+    "Programming Languages",
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "postman",
+    "http",
+    "rest client",
+    "thunder client",
+    "thunder client alternative",
+    "postman to http",
+    "openapi to http",
+    "bruno",
+    "bruno to openapi",
+    "curl to http",
+    "openapi",
+    "api testing",
+    "csv batch runner",
+    "junit xml",
+    "schema diff",
+    "no login",
+    "local first",
+    "offline",
+    "cursor",
+    "http file",
+    "swagger",
+    "yaml",
+    "api client",
+    "ci cd",
+    "github actions",
+    "env",
+    "rest",
+    "curl"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:http",
+    "onLanguage:rest",
+    "onView:reqbridgeExplorer",
+    "onCommand:reqbridge.importCollection",
+    "onCommand:reqbridge.importCurl",
+    "onCommand:reqbridge.autoDiscoverThunder",
+    "onCommand:reqbridge.copyAsCurl",
+    "onCommand:reqbridge.exportOpenApi",
+    "onCommand:reqbridge.sendRequest",
+    "onCommand:reqbridge.runCsvBatch",
+    "onCommand:reqbridge.diffStagingProd",
+    "onCommand:reqbridge.exportCiBundle",
+    "onCommand:reqbridge.activateLicense",
+    "onCommand:reqbridge.translateScriptByok"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "reqbridge.importCollection",
+        "title": "Import & Convert Collection to .http + .env.example",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.exportOpenApi",
+        "title": "Export to OpenAPI 3.1 YAML",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.sendRequest",
+        "title": "Send Single Request",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.runCsvBatch",
+        "title": "Run Local CSV/JSON Batch",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.diffStagingProd",
+        "title": "Diff Staging vs Prod Schema",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.exportCiBundle",
+        "title": "Export Zero-Lock-In CI Bundle (Pro)",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.activateLicense",
+        "title": "Manage Pro License / Activate Key",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.translateScriptByok",
+        "title": "Translate pm.test() Script via BYOK (Pro)",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.importCurl",
+        "title": "Import cURL Command to .http + OpenAPI",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.autoDiscoverThunder",
+        "title": "Auto-Discover Local Thunder Client Collections",
+        "category": "ReqBridge"
+      },
+      {
+        "command": "reqbridge.copyAsCurl",
+        "title": "Copy Request as cURL",
+        "category": "ReqBridge"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "reqbridge",
+          "title": "ReqBridge Local API",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "reqbridge": [
+        {
+          "id": "reqbridgeExplorer",
+          "name": "Local API Explorer"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "reqbridgeExplorer",
+        "contents": "Migrate Postman, Thunder Client, Bruno, OpenAPI & cURL to Git-native `.http` locally (zero logins).\n[Import Collection / OpenAPI](command:reqbridge.importCollection)\n[Paste cURL Command](command:reqbridge.importCurl)\n[Auto-Discover Thunder Client](command:reqbridge.autoDiscoverThunder)\n[Activate Pro Key ($19/$29)](command:reqbridge.activateLicense)"
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "reqbridge.getStarted",
+        "title": "Get Started with ReqBridge Local API",
+        "description": "Migrate Postman, Thunder Client, Bruno, OpenAPI 3.1, and cURL into Git-native .http files, run CSV batches, and diff staging vs. prod schemas locally.",
+        "steps": [
+          {
+            "id": "import",
+            "title": "1. Import Collections, OpenAPI, or cURL -> .http",
+            "description": "Convert Postman v2.1, Thunder Client, Bruno (.bru), OpenAPI 3.0/3.1 (YAML/JSON), or cURL commands into `.http` + `.env.example` + OpenAPI 3.1.\n[Import Collection](command:reqbridge.importCollection) or [Auto-Discover Thunder](command:reqbridge.autoDiscoverThunder)",
+            "media": {
+              "image": "media/demo.gif",
+              "altText": "ReqBridge migration to .http, CSV batch runner, and schema diff walkthrough"
+            }
+          },
+          {
+            "id": "run",
+            "title": "2. Click CodeLens Send Request or Run CSV Batch",
+            "description": "Open any `.http` file and click `Send Request` or `Run CSV Batch` inline above any request to execute locally and emit JUnit XML + Markdown reports.",
+            "media": {
+              "image": "media/icon.svg",
+              "altText": "ReqBridge CodeLens and CSV Batch Runner"
+            }
+          },
+          {
+            "id": "diff",
+            "title": "3. Diff Staging vs Prod & Export Zero-Lock-In CI",
+            "description": "Catch breaking JSON type shifts and missing keys side-by-side before shipping, and export standalone `reqbridge-ci.mjs` + GitHub Actions YAML.",
+            "media": {
+              "image": "media/icon.svg",
+              "altText": "ReqBridge Staging vs Prod Schema Diff"
+            }
+          }
+        ]
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "reqbridge.sendRequest",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "navigation"
+        },
+        {
+          "command": "reqbridge.runCsvBatch",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "navigation"
+        },
+        {
+          "command": "reqbridge.diffStagingProd",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "reqbridge.sendRequest",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "reqbridge@1"
+        },
+        {
+          "command": "reqbridge.runCsvBatch",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "reqbridge@2"
+        },
+        {
+          "command": "reqbridge.diffStagingProd",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "reqbridge@3"
+        },
+        {
+          "command": "reqbridge.exportOpenApi",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest || resourceExtname == .json || resourceExtname == .bru",
+          "group": "reqbridge@4"
+        },
+        {
+          "command": "reqbridge.exportCiBundle",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "reqbridge@5"
+        },
+        {
+          "command": "reqbridge.importCollection",
+          "when": "resourceExtname == .json || resourceExtname == .bru || resourceExtname == .yaml || resourceExtname == .yml",
+          "group": "reqbridge@1"
+        },
+        {
+          "command": "reqbridge.copyAsCurl",
+          "when": "editorLangId == http || editorLangId == rest || resourceExtname == .http || resourceExtname == .rest",
+          "group": "reqbridge@6"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "reqbridge.importCollection",
+          "when": "resourceExtname == .json || resourceExtname == .bru || explorerResourceIsFolder",
+          "group": "reqbridge@1"
+        },
+        {
+          "command": "reqbridge.exportOpenApi",
+          "when": "resourceExtname == .json || resourceExtname == .bru || resourceExtname == .http || resourceExtname == .rest || explorerResourceIsFolder",
+          "group": "reqbridge@2"
+        },
+        {
+          "command": "reqbridge.runCsvBatch",
+          "when": "resourceExtname == .http || resourceExtname == .rest",
+          "group": "reqbridge@3"
+        },
+        {
+          "command": "reqbridge.exportCiBundle",
+          "when": "resourceExtname == .http || resourceExtname == .rest",
+          "group": "reqbridge@4"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ReqBridge Local API",
+      "properties": {
+        "reqbridge.license.provider": {
+          "type": "string",
+          "enum": ["auto", "creem", "gumroad", "offline"],
+          "default": "auto",
+          "description": "License verification provider used when activating non-RB1 license keys."
+        },
+        "reqbridge.license.creemTestMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use Creem sandbox API endpoint for license verification."
+        },
+        "reqbridge.license.creemApiBaseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Optional custom Creem API base URL override."
+        },
+        "reqbridge.license.gumroadProductId": {
+          "type": "string",
+          "default": "",
+          "description": "Optional Gumroad product ID for license verification."
+        },
+        "reqbridge.batch.concurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32,
+          "default": 5,
+          "description": "Maximum concurrent HTTP requests during CSV/JSON batch runs."
+        },
+        "reqbridge.batch.timeoutMs": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 120000,
+          "default": 15000,
+          "description": "Per-request HTTP timeout in milliseconds."
+        },
+        "reqbridge.byok.provider": {
+          "type": "string",
+          "enum": ["openai", "openai-compatible", "gemini"],
+          "default": "openai",
+          "description": "Optional BYOK provider for translating pm.test() scripts."
+        },
+        "reqbridge.byok.model": {
+          "type": "string",
+          "default": "",
+          "description": "Optional model override for BYOK script translation."
+        },
+        "reqbridge.byok.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Optional OpenAI-compatible or Gemini base URL override."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "node esbuild.mjs",
+    "build:test": "tsc -p tsconfig.test.json",
+    "test": "tsc -p tsconfig.test.json && node --test \"out-test/test/**/*.test.js\"",
+    "package": "node esbuild.mjs && vsce package --no-dependencies",
+    "vscode:prepublish": "npm run typecheck && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.4",
+    "@types/vscode": "^1.96.0",
+    "@vscode/vsce": "^4.1.1",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3"
+  }
+}

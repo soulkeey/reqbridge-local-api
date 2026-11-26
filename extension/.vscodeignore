@@ -1,0 +1,14 @@
+.gitignore
+.vscodeignore
+.secrets/**
+node_modules/**
+src/**
+test/**
+out-test/**
+tsconfig.json
+tsconfig.test.json
+esbuild.mjs
+*.vsix
+.env*
+**/*.map
+.git/**
