@@ -1,0 +1,57 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "ReqBridge Thunder E2E",
+  "dateExported": "2026-11-26T10:00:00.000Z",
+  "version": "1.2",
+  "folders": [
+    {
+      "_id": "fld-orders",
+      "name": "Orders",
+      "containerId": "",
+      "sortNum": 10000
+    }
+  ],
+  "requests": [
+    {
+      "_id": "req-list",
+      "colId": "col-1",
+      "containerId": "fld-orders",
+      "name": "List Orders",
+      "url": "{{baseUrl}}/v2/orders?status=paid",
+      "method": "GET",
+      "headers": [
+        { "name": "Accept", "value": "application/json" },
+        { "name": "X-Client", "value": "thunder" },
+        { "name": "X-Disabled", "value": "skip", "isDisabled": true }
+      ],
+      "params": [
+        { "name": "status", "value": "paid", "isPath": false }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": "{{apiToken}}"
+      },
+      "tests": [
+        { "type": "res-code", "custom": "", "action": "equal", "value": "200" }
+      ]
+    },
+    {
+      "_id": "req-create",
+      "colId": "col-1",
+      "containerId": "fld-orders",
+      "name": "Create Order",
+      "url": "{{baseUrl}}/v2/orders",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\"sku\":\"PRO-19\",\"qty\":1}"
+      },
+      "tests": [
+        { "type": "res-code", "custom": "", "action": "equal", "value": "201" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+@baseUrl = http://127.0.0.1:8787
+@apiToken = sample_bearer_token
+
+### List Paid Orders
+# @name list_orders
+GET {{baseUrl}}/v2/orders?status=paid
+Authorization: Bearer {{apiToken}}
+Accept: application/json
+
+# @assert status == 200
+
+### Create Order
+# @name create_order
+POST {{baseUrl}}/v2/orders
+Authorization: Bearer {{apiToken}}
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "customer": "{{customer}}"
+}
+
+# @assert status == 201
