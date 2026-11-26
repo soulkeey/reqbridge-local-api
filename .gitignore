@@ -1,0 +1,21 @@
+# Secrets & seller signing keys (NEVER commit)
+.secrets/
+*.pem
+mianbaoduo_batch_*.txt
+
+# Dependencies & build artifacts
+node_modules/
+extension/node_modules/
+extension/out-test/
+extension/dist/
+extension/*.vsix
+*.map
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# OS / Editor
+.DS_Store
+Thumbs.db
