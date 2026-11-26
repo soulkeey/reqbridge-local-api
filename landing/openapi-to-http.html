@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAPI 3.0 / 3.1 (YAML &amp; JSON) to .http Generator (Zero .NET SDK) — ReqBridge Local API</title>
+  <meta name="description" content="Generate clean VS Code .http files and .env.example from OpenAPI 3.0 / 3.1 YAML or JSON specs in pure TypeScript—no .NET 8.0 SDK required. Plus cURL to .http and Staging vs Prod diff.">
+  <link rel="canonical" href="https://reqbridge-local-api.pages.dev/openapi-to-http.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="OpenAPI 3.0/3.1 to .http Generator (Zero .NET SDK) — ReqBridge Local API">
+  <meta property="og:description" content="Convert OpenAPI 3.0/3.1 YAML or JSON specifications into runnable VS Code .http request files locally without installing .NET SDK.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reqbridge-local-api.pages.dev/openapi-to-http.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-row">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">RB</span>
+        <span>ReqBridge Local API</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html#demo">Live Sandbox</a>
+        <a href="postman-to-http.html">Postman to .http</a>
+        <a href="thunder-client-alternative.html">Thunder Client Alternative</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a class="nav-cta" href="checkout-personal.html">Unlock Pro · $19</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="badge-live">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Pure TypeScript · Zero .NET SDK Required · Bi-Directional OpenAPI 3.1
+        </span>
+        <h1>
+          Generate VS Code <code>.http</code> Files from<br>
+          <span class="gradient-text">OpenAPI 3.0 / 3.1 YAML &amp; JSON—Without .NET</span>
+        </h1>
+        <p class="lead">
+          Paste any OpenAPI 3.0 / 3.1 (or Swagger 2.0) YAML/JSON spec and immediately produce runnable <code>.http</code> requests
+          with <code>servers</code>, path/query/header parameters, Bearer/API-Key/Basic security headers, and synthesized JSON request bodies—or
+          convert <code>.http</code>, Postman, Thunder Client, Bruno, and cURL right back into OpenAPI 3.1.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="index.html#demo">Try OpenAPI &rarr; .http Sandbox &rarr;</a>
+          <a class="btn btn-secondary" href="https://marketplace.visualstudio.com/items?itemName=soulkey-tools.reqbridge-local-api" target="_blank" rel="noopener">
+            Install Free VS Code Extension
+          </a>
+          <a class="btn btn-secondary" href="checkout-personal.html">Pro License — $19 One-Time</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal is-visible">
+      <div class="container">
+        <div class="eyebrow">Bi-Directional API Spec Pipeline</div>
+        <h2>From OpenAPI Spec to Regression-Tested Endpoints in 30 Seconds</h2>
+        <div class="grid-3">
+          <article class="card">
+            <span class="solve-tag">Zero Heavy Runtimes</span>
+            <h3>Pure TypeScript Engine</h3>
+            <p>No <code>.NET 8.0 SDK</code>, Java, or Python runtime required. Runs directly in your browser or VS Code Node host on Windows, macOS, Linux, and WSL.</p>
+          </article>
+          <article class="card">
+            <span class="solve-tag">Smart Synthesis</span>
+            <h3><code>$ref</code> &amp; Example Resolution</h3>
+            <p>Resolves <code>#/components/schemas</code>, <code>securitySchemes</code>, and operation examples to generate realistic JSON payloads and <code># @assert status == 200</code> checks.</p>
+          </article>
+          <article class="card">
+            <span class="solve-tag">cURL Round-Trip</span>
+            <h3>Paste cURL or Copy as cURL</h3>
+            <p>Need a quick terminal repro or quick import? Paste any <code>curl</code> command into ReqBridge to emit <code>.http</code> + OpenAPI 3.1, or copy any <code>.http</code> block as cURL.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>
+          <strong>ReqBridge Local API</strong> · Support:
+          <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="postman-to-http.html">Postman to .http</a>
+          <a href="thunder-client-alternative.html">Thunder Client Alternative</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="refund.html">Refund Policy</a>
+        </div>
+      </div>
+      <p class="disclaimer">
+        Independent productivity software. Not affiliated with, endorsed by, or sponsored by Postman, Thunder Client, Bruno, or Microsoft Visual Studio Code.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

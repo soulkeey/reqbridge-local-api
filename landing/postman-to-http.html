@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Postman v2.1 to .http &amp; OpenAPI 3.1 Converter — ReqBridge Local API</title>
+  <meta name="description" content="Convert Postman Collection v2.1 JSON into Git-native VS Code .http, .env.example, and OpenAPI 3.1 YAML 100% locally—preserving inherited folder auth, query params, and pm.test assertions.">
+  <link rel="canonical" href="https://reqbridge-local-api.pages.dev/postman-to-http.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Postman v2.1 to .http &amp; OpenAPI 3.1 Converter — ReqBridge Local API">
+  <meta property="og:description" content="Escape Postman cloud lock-in. Convert Postman v2.1 JSON to plain .http + .env.example + OpenAPI 3.1 locally in your browser or VS Code.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reqbridge-local-api.pages.dev/postman-to-http.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-row">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">RB</span>
+        <span>ReqBridge Local API</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html#demo">Live Sandbox</a>
+        <a href="thunder-client-alternative.html">Thunder Client Alternative</a>
+        <a href="openapi-to-http.html">OpenAPI to .http</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a class="nav-cta" href="checkout-personal.html">Unlock Pro · $19</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="badge-live">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          100% Local Postman v2.1 Migration · Zero Cloud Uploads
+        </span>
+        <h1>
+          Convert Postman v2.1 Collections to<br>
+          <span class="gradient-text">Git-Native .http, .env.example &amp; OpenAPI 3.1</span>
+        </h1>
+        <p class="lead">
+          Export your Postman workspace once and move permanently into plain-text <code>.http</code> files reviewed in Git pull requests.
+          ReqBridge preserves nested folder Bearer/Basic/API-Key auth inheritance, extracts secrets into <code>.env.example</code>,
+          and merges duplicate endpoint paths into valid OpenAPI 3.1.0 YAML.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="index.html#demo">Convert Postman JSON in Browser &rarr;</a>
+          <a class="btn btn-secondary" href="https://marketplace.visualstudio.com/items?itemName=soulkey-tools.reqbridge-local-api" target="_blank" rel="noopener">
+            Install Free VS Code Extension
+          </a>
+          <a class="btn btn-secondary" href="checkout-personal.html">Unlock Pro — $19 One-Time</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal is-visible">
+      <div class="container">
+        <div class="eyebrow">Lossless Migration Guarantees</div>
+        <h2>What Other Postman-to-.http Scripts Drop—and ReqBridge Preserves</h2>
+        <div class="grid-3">
+          <article class="card">
+            <span class="solve-tag">Auth Inheritance</span>
+            <h3>Collection &amp; Folder Auth</h3>
+            <p>Inherited Bearer, Basic, and API-Key auth (including <code>noauth</code> overrides on public endpoints) are resolved cleanly onto every generated <code>.http</code> block.</p>
+          </article>
+          <article class="card">
+            <span class="solve-tag">Secret Safety</span>
+            <h3>Auto <code>.env.example</code> Extraction</h3>
+            <p>Sensitive tokens and keys (<code>token</code>, <code>secret</code>, <code>apiKey</code>) are never written in plaintext inside <code>.http</code> or OpenAPI specs.</p>
+          </article>
+          <article class="card">
+            <span class="solve-tag">CI &amp; Regression</span>
+            <h3>CSV Batch + Schema Diff</h3>
+            <p>Execute your migrated <code>.http</code> file across CSV/JSON datasets with JUnit XML output or diff staging vs. production schemas directly in VS Code.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal is-visible">
+      <div class="container">
+        <div class="tier-split">
+          <article class="card">
+            <span class="solve-tag">Free Core ($0)</span>
+            <h3>Unlimited Postman Migration</h3>
+            <p>Convert unlimited Postman v2.1 collections to <code>.http</code>, <code>.env.example</code>, and OpenAPI 3.1 in the browser sandbox or VS Code Free Core.</p>
+          </article>
+          <article class="card card-highlight">
+            <span class="badge">Pro License ($19 Personal / $29 Team 5-Seat)</span>
+            <h3>Unlimited Batch &amp; Zero-Lock-In CI</h3>
+            <p>Unlock unlimited CSV/JSON batch runs, collection-wide staging-vs-prod diffs, standalone <code>reqbridge-ci.mjs</code> export, and optional BYOK <code>pm.test()</code> translation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>
+          <strong>ReqBridge Local API</strong> · Support:
+          <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="thunder-client-alternative.html">Thunder Client Alternative</a>
+          <a href="openapi-to-http.html">OpenAPI to .http</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="refund.html">Refund Policy</a>
+        </div>
+      </div>
+      <p class="disclaimer">
+        Independent productivity software. Not affiliated with, endorsed by, or sponsored by Postman, Thunder Client, Bruno, or Microsoft Visual Studio Code.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

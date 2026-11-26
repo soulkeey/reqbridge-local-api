@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — ReqBridge Local API</title>
+  <meta name="description" content="Privacy Policy for ReqBridge Local API: 100% local-first collection conversion, BYOK SecretStorage handling, and minimal license verification.">
+  <link rel="canonical" href="https://reqbridge-local-api.pages.dev/privacy.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Privacy Policy — ReqBridge Local API">
+  <meta property="og:description" content="Strict data-minimization and local-first processing for API collections, secrets, and license activation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reqbridge-local-api.pages.dev/privacy.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-row">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">RB</span><span>ReqBridge Local API</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="privacy.html" aria-current="page">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="refund.html">Refund Policy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container legal-doc">
+    <h1>Privacy Policy</h1>
+    <p><strong>Last Updated:</strong> November 26, 2026</p>
+    <p>
+      This Privacy Policy explains how <strong>ReqBridge Local API</strong> handles information when you visit our website
+      or use our VS Code extension. We follow strict data-minimization and local-first principles.
+    </p>
+
+    <h2>1. Local-First Processing &amp; BYOK Keys</h2>
+    <ul>
+      <li>Your Postman collections, Thunder Client files, Bruno files, <code>.http</code> suites, OpenAPI specs, environment variables, and API responses are processed locally on your machine. We do not operate a cloud storage backend for your API workspaces.</li>
+      <li>If you use optional Bring-Your-Own-Key (BYOK) features to translate complex <code>pm.test()</code> scripts, your API credentials are stored locally in <code>vscode.SecretStorage</code> and transmitted solely to the AI provider endpoint you configure.</li>
+      <li>This static website uses no third-party advertising trackers, retargeting pixels, or behavioral profiling cookies.</li>
+    </ul>
+
+    <h2>2. License Activation &amp; Payment Processing</h2>
+    <ul>
+      <li><strong>Offline Ed25519 Keys:</strong> Signed <code>RB1.</code> license keys are verified locally in-process with zero network requests.</li>
+      <li><strong>Merchant of Record (Global):</strong> Payments, invoicing, and tax compliance for global orders are processed by <strong>Creem (Armitage Labs OÜ)</strong> or <strong>Gumroad</strong>. We never receive or store your full payment card number or CVV.</li>
+      <li><strong>Domestic Payment Channel (Mainland China):</strong> Optional RMB orders are processed by <strong>Mianbaoduo (mbd.pub)</strong> under their payment privacy terms.</li>
+      <li><strong>Online License Validation:</strong> Activating or validating an online Creem/Gumroad key transmits only your license key and an anonymized device identifier (<code>vscode.env.machineId</code>) to enforce device seat limits.</li>
+    </ul>
+
+    <h2>3. Support Communications &amp; Data Deletion</h2>
+    <p>
+      When you email <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a>, we use your email address and order
+      reference solely to resolve your support or refund request. To request access, correction, or deletion of support
+      correspondence (GDPR / CCPA), contact <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a>.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>
+          <strong>ReqBridge Local API</strong> · Support:
+          <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="refund.html">Refund Policy</a>
+        </div>
+      </div>
+      <p class="disclaimer">
+        Independent productivity software. Not affiliated with, endorsed by, or sponsored by Postman, Thunder Client, Bruno, or Microsoft Visual Studio Code.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

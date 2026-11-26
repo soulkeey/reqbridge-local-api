@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReqBridge Local API — Escape Cloud Lock-In &amp; 50-Run Caps in VS Code</title>
+  <meta name="description" content="Convert Postman v2.1, Thunder Client, Bruno (.bru), and .http collections into Git-native .http, .env.example, and OpenAPI 3.1 locally, run CSV batches, and diff staging vs. prod schemas in VS Code.">
+  <link rel="canonical" href="https://reqbridge-local-api.pages.dev/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="ReqBridge Local API — Git-Native .http Migration, Batch Runner &amp; Schema Diff">
+  <meta property="og:description" content="Local-first VS Code extension &amp; browser sandbox: migrate Postman, Thunder Client, Bruno .bru, and .http collections to OpenAPI 3.1, run CSV batches, and detect staging vs. prod drift.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reqbridge-local-api.pages.dev/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-row">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">RB</span>
+        <span>ReqBridge Local API</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#demo">Live Sandbox</a>
+        <a href="#walkthrough">Walkthrough</a>
+        <a href="#why-switch">Why Switch</a>
+        <a href="#compare">Compare</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="checkout-personal.html">Unlock Pro · $19</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="badge-live">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          VS Code Extension (<code>soulkey-tools.reqbridge-local-api</code>) · 100% Local-First · Optional BYOK
+        </span>
+        <h1>
+          Escape Cloud Lock-In &amp; 50-Run Caps.<br>
+          <span class="gradient-text">Git-Native .http Migration &amp; Batch Runner.</span>
+        </h1>
+        <p class="lead">
+          Convert Postman v2.1, Thunder Client, Bruno <code>.bru</code>, OpenAPI 3.0/3.1 (YAML/JSON), cURL, and <code>.http</code> collections into clean VS Code
+          <code>.http</code> + <code>.env.example</code> + OpenAPI 3.1 specs locally—preserving inherited auth and assertions—then
+          run data-driven CSV batches and diff <code>staging</code> vs. <code>prod</code> schemas with zero cloud sign-in.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://marketplace.visualstudio.com/items?itemName=soulkey-tools.reqbridge-local-api" target="_blank" rel="noopener">
+            Install Free Core in VS Code
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/soulkeey/reqbridge-local-api/releases/latest" target="_blank" rel="noopener">
+            Download .vsix Release
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/soulkeey/reqbridge-local-api" target="_blank" rel="noopener">
+            GitHub Repo
+          </a>
+          <a class="btn btn-secondary" href="#demo">Try Live Sandbox ↓</a>
+          <a class="btn btn-secondary" href="#pricing">Unlock Pro — $19</a>
+        </div>
+
+        <div class="install-bar" aria-label="VS Code CLI quick install">
+          <span style="font-size: 0.8rem; color: var(--muted);">CLI:</span>
+          <code class="cli-code">code --install-extension soulkey-tools.reqbridge-local-api</code>
+          <button type="button" class="btn btn-secondary btn-sm copy-cli-btn">Copy CLI</button>
+          <span class="install-links">
+            <a href="#walkthrough">Free Core vs. Pro limits</a>
+          </span>
+        </div>
+
+        <div class="trust-strip" aria-label="Product guarantees">
+          <span><strong>✓</strong> Zero Cloud Sign-In</span>
+          <span><strong>✓</strong> Free Core Migration &amp; Single-Request</span>
+          <span><strong>✓</strong> One-Time Pro License ($19 / $29)</span>
+          <span><strong>✓</strong> 14-Day Refund Guarantee</span>
+        </div>
+
+        <div id="demo" class="ide-window reveal" role="region" aria-label="Interactive ReqBridge Local API Demo">
+          <div class="ide-titlebar">
+            <div class="ide-dots" aria-hidden="true">
+              <span class="ide-dot dot-r"></span>
+              <span class="ide-dot dot-y"></span>
+              <span class="ide-dot dot-g"></span>
+            </div>
+            <span class="ide-caption">ReqBridge Local API — Client-Side Engine (0 Bytes Uploaded)</span>
+            <span class="ide-badge">Runs 100% in Browser</span>
+          </div>
+
+          <div class="ide-tabs" role="tablist" aria-label="Demo workflows">
+            <button type="button" class="ide-tab active" data-tab="converter" role="tab" aria-selected="true">
+              1. Multi-Format &rarr; .http / OpenAPI 3.1
+            </button>
+            <button type="button" class="ide-tab" data-tab="runner" role="tab" aria-selected="false">
+              2. Live CSV Batch Runner (fetch)
+            </button>
+            <button type="button" class="ide-tab" data-tab="diff" role="tab" aria-selected="false">
+              3. Staging vs. Prod Schema Diff
+            </button>
+          </div>
+
+          <div class="ide-body">
+            <!-- Panel 1: Real Multi-Format Converter -->
+            <div class="ide-panel" data-panel="converter">
+              <div class="toolbar-row">
+                <div class="pill-group">
+                  <label for="converter-format-select" style="font-size: 0.8rem; color: var(--muted);">Input:</label>
+                  <select id="converter-format-select" class="select-sm" aria-label="Input collection format">
+                    <option value="auto" selected>Auto-detect</option>
+                    <option value="postman">Postman v2.1 JSON</option>
+                    <option value="thunder">Thunder Client JSON</option>
+                    <option value="bruno">Bruno .bru</option>
+                    <option value="openapi">OpenAPI 3.0/3.1 (YAML/JSON)</option>
+                    <option value="curl">cURL command</option>
+                    <option value="http">.http file</option>
+                  </select>
+                  <button type="button" class="pill-btn preset-btn active" data-preset="orders">Postman Orders</button>
+                  <button type="button" class="pill-btn preset-btn" data-preset="webhooks">Postman Webhooks</button>
+                  <button type="button" class="pill-btn preset-btn" data-preset="thunder">Thunder</button>
+                  <button type="button" class="pill-btn preset-btn" data-preset="bruno">Bruno .bru</button>
+                  <button type="button" class="pill-btn preset-btn" data-preset="openapi">OpenAPI &rarr; .http</button>
+                  <button type="button" class="pill-btn preset-btn" data-preset="curl">cURL &rarr; .http</button>
+                  <button type="button" class="pill-btn preset-btn" data-preset="http">.http</button>
+                  <label class="btn btn-secondary btn-sm file-label" for="converter-file-input">
+                    Upload File
+                    <input id="converter-file-input" class="file-input-hidden" type="file" accept=".json,.bru,.http,.yaml,.yml,.txt">
+                  </label>
+                </div>
+                <div class="pill-group">
+                  <button type="button" class="pill-btn format-btn active" data-format="http">VS Code .http</button>
+                  <button type="button" class="pill-btn format-btn" data-format="env">.env.example</button>
+                  <button type="button" class="pill-btn format-btn" data-format="openapi">OpenAPI 3.1 YAML</button>
+                  <button type="button" id="copy-converter-btn" class="btn btn-secondary btn-sm">Copy Output</button>
+                  <button type="button" id="download-converter-btn" class="btn btn-secondary btn-sm">Download File</button>
+                  <button type="button" id="download-zip-btn" class="btn btn-primary btn-sm">Download .zip</button>
+                </div>
+              </div>
+
+              <div class="converter-grid">
+                <div id="converter-dropzone" class="pane-box">
+                  <div class="pane-bar">
+                    <span>Input: Paste or Drop Postman / Thunder / .bru / OpenAPI / cURL / .http</span>
+                    <span>Editable live</span>
+                  </div>
+                  <textarea id="postman-input" class="json-input" spellcheck="false" aria-label="Collection input text"></textarea>
+                </div>
+
+                <div class="pane-box">
+                  <div class="pane-bar">
+                    <span>Output: Deterministic Git-Ready Artifact</span>
+                    <span>Inherited auth &amp; merged paths</span>
+                  </div>
+                  <pre id="converter-output" class="code-output"></pre>
+                </div>
+              </div>
+
+              <div class="status-strip">
+                <span id="converter-status" class="status-ok">Ready</span>
+                <span>
+                  Want CodeLens <code>Send Request</code> &amp; multi-file <code>.bru</code> folder import?
+                  <a href="https://marketplace.visualstudio.com/items?itemName=soulkey-tools.reqbridge-local-api" target="_blank" rel="noopener">Install Free VS Code Extension</a>
+                </span>
+              </div>
+            </div>
+
+            <!-- Panel 2: Real CSV Batch Runner (fetch) -->
+            <div class="ide-panel" data-panel="runner" hidden>
+              <div class="toolbar-row">
+                <div class="pill-group">
+                  <span style="font-size: 0.8rem; color: var(--muted);">CSV sample:</span>
+                  <button type="button" class="pill-btn batch-sample-btn active" data-sample="orders-3">3-row RFC-4180 sample</button>
+                  <button type="button" class="pill-btn batch-sample-btn" data-sample="trial-10">10-row Free Core trial</button>
+                  <label class="btn btn-secondary btn-sm file-label" for="batch-csv-file">
+                    Upload CSV
+                    <input id="batch-csv-file" class="file-input-hidden" type="file" accept=".csv,.txt">
+                  </label>
+                </div>
+                <div class="pill-group">
+                  <button type="button" id="run-batch-btn" class="btn btn-primary btn-sm">Run Live Batch ▶</button>
+                  <button type="button" id="copy-report-btn" class="btn btn-secondary btn-sm">Copy Log</button>
+                  <button type="button" id="export-junit-btn" data-export="junit" class="btn btn-secondary btn-sm">Export JUnit XML</button>
+                  <button type="button" id="export-md-btn" data-export="markdown" class="btn btn-secondary btn-sm">Export Markdown</button>
+                </div>
+              </div>
+
+              <div class="cors-note">
+                <strong>Browser Sandbox vs. VS Code Node Fetch:</strong> This tab executes real browser <code>fetch()</code> calls directly from your browser.
+                Cross-origin endpoints without <code>Access-Control-Allow-Origin</code> will be blocked by browser CORS—use a CORS-enabled / localhost target here,
+                or install the VS Code extension to run via Node <code>fetch</code> with zero CORS restrictions.
+              </div>
+
+              <div class="runner-config-grid">
+                <div class="field-group">
+                  <label class="field-label" for="batch-method-select">HTTP Method</label>
+                  <select id="batch-method-select" class="select-sm">
+                    <option value="POST" selected>POST</option>
+                    <option value="GET">GET</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="batch-url-input">Endpoint URL (supports <code>{{vars}}</code>)</label>
+                  <input id="batch-url-input" class="input-sm" type="url" value="http://localhost:8787/v2/orders" placeholder="http://localhost:8787/v2/orders">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="batch-assert-input">Assertion (optional)</label>
+                  <input id="batch-assert-input" class="input-sm" type="text" value="" placeholder="Default: 2xx..3xx (or e.g. status == 201)">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="batch-concurrency-input">Concurrency</label>
+                  <input id="batch-concurrency-input" class="input-sm" type="number" value="4" min="1" max="10">
+                </div>
+              </div>
+
+              <div class="runner-split">
+                <div class="pane-box" style="min-height: 190px;">
+                  <div class="pane-bar"><span>CSV Data Rows (RFC-4180)</span><span>Quotes &amp; commas supported</span></div>
+                  <textarea id="csv-input" class="json-input" style="min-height: 145px;" spellcheck="false" aria-label="CSV rows input"></textarea>
+                </div>
+                <div class="pane-box" style="min-height: 190px;">
+                  <div class="pane-bar"><span>Headers JSON &amp; Body Template</span><span><code>{{column}}</code> substitution</span></div>
+                  <div style="padding: 8px 10px; border-bottom: 1px solid var(--border);">
+                    <input id="batch-headers-input" class="input-sm" style="width: 100%;" type="text" value='{"Content-Type":"application/json"}' aria-label="Request headers JSON">
+                  </div>
+                  <textarea id="batch-body-input" class="json-input" style="min-height: 105px;" spellcheck="false" aria-label="Request body template">{"orderId":"{{orderId}}","customer":"{{customer}}"}</textarea>
+                </div>
+              </div>
+
+              <div class="progress-wrap">
+                <div class="progress-meta">
+                  <span id="batch-progress-text">Ready: RFC-4180 CSV parser &amp; real browser fetch()</span>
+                  <span style="color: var(--subtle);">Exports real JUnit XML (results.xml) &amp; Markdown (batch-report.md)</span>
+                </div>
+                <div class="progress-track">
+                  <div id="batch-progress-fill" class="progress-fill"></div>
+                </div>
+              </div>
+
+              <pre id="batch-log" class="terminal-log">Edit CSV rows and Endpoint URL above, then click "Run Live Batch ▶" to execute real browser fetch() requests and export JUnit XML / Markdown.</pre>
+            </div>
+
+            <!-- Panel 3: Live Staging vs Prod Diff Inspector -->
+            <div class="ide-panel" data-panel="diff" hidden>
+              <div class="toolbar-row">
+                <div class="pill-group">
+                  <span style="font-size: 0.8rem; color: var(--muted);">Preset:</span>
+                  <button type="button" class="pill-btn diff-ep-btn active" data-endpoint="orders">GET /v2/orders/{id}</button>
+                  <button type="button" class="pill-btn diff-ep-btn" data-endpoint="checkout">POST /v2/checkout</button>
+                  <button type="button" class="pill-btn diff-ep-btn" data-endpoint="profile">GET /v1/users/me</button>
+                </div>
+                <div class="pill-group">
+                  <button type="button" id="run-diff-btn" class="btn btn-primary btn-sm">Run Schema Diff</button>
+                  <button type="button" id="copy-diff-btn" class="btn btn-secondary btn-sm">Copy Markdown Diff</button>
+                  <button type="button" id="download-diff-md-btn" class="btn btn-secondary btn-sm">Download .md</button>
+                </div>
+              </div>
+
+              <div class="diff-meta-row">
+                <div class="field-group">
+                  <label class="field-label" for="diff-endpoint-input">Endpoint Label</label>
+                  <input id="diff-endpoint-input" class="input-sm" type="text" value="GET /v2/orders/{id}">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="diff-staging-status">Staging HTTP Status</label>
+                  <input id="diff-staging-status" class="input-sm" type="number" value="200">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="diff-staging-latency">Staging Latency (ms)</label>
+                  <input id="diff-staging-latency" class="input-sm" type="number" value="226">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="diff-prod-status">Prod HTTP Status</label>
+                  <input id="diff-prod-status" class="input-sm" type="number" value="200">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="diff-prod-latency">Prod Latency (ms)</label>
+                  <input id="diff-prod-latency" class="input-sm" type="number" value="42">
+                </div>
+              </div>
+
+              <div id="diff-banner" class="diff-banner"></div>
+
+              <div class="diff-grid">
+                <div class="pane-box">
+                  <div class="pane-bar"><span>Staging Response JSON (Editable)</span><span>New build</span></div>
+                  <textarea id="diff-staging-input" class="json-input diff-line-ok" spellcheck="false" aria-label="Staging JSON payload"></textarea>
+                </div>
+                <div class="pane-box">
+                  <div class="pane-bar"><span>Production Baseline JSON (Editable)</span><span>Current live</span></div>
+                  <textarea id="diff-prod-input" class="json-input diff-line-warn" spellcheck="false" aria-label="Production JSON payload"></textarea>
+                </div>
+              </div>
+
+              <div id="diff-result" class="diff-entries-list" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="walkthrough" class="reveal">
+      <div class="container">
+        <div class="eyebrow">VS Code Extension Workflow</div>
+        <h2>From Postman / Thunder / Bruno to Git-Native <code>.http</code> in 4 Steps</h2>
+        <p class="section-sub">
+          Everything in the browser sandbox above ships natively inside VS Code (<code>soulkey-tools.reqbridge-local-api</code>) with an Activity Bar Explorer, 1-click Thunder Client auto-discovery, CodeLens, filesystem <code>.bru</code> folder import, and Node <code>fetch</code> execution.
+        </p>
+
+        <div style="margin: 18px auto 24px; text-align: center;">
+          <img src="demo.gif" alt="ReqBridge Local API VS Code walkthrough: Postman, Thunder, OpenAPI, and cURL to .http, CSV Batch Runner, and Schema Diff" style="width: 100%; max-width: 720px; border-radius: 12px; border: 1px solid var(--border);">
+        </div>
+
+        <div class="walkthrough-grid">
+          <article class="card">
+            <span class="step-num">1</span>
+            <h3>Install Free Core</h3>
+            <p>Install via VS Code Marketplace, GitHub Releases <code>.vsix</code>, or <code>code --install-extension soulkey-tools.reqbridge-local-api</code>.</p>
+          </article>
+          <article class="card">
+            <span class="step-num">2</span>
+            <h3>Convert Collections</h3>
+            <p>Run <code>ReqBridge: Import &amp; Convert Collection</code> to transpile Postman v2.1, Thunder Client, Bruno folders, or <code>.http</code> into <code>.http</code>, <code>.env.example</code>, and OpenAPI 3.1.</p>
+          </article>
+          <article class="card">
+            <span class="step-num">3</span>
+            <h3>CodeLens Inside <code>.http</code></h3>
+            <p>Click inline CodeLens actions above any request block: <code>Send Request</code>, <code>Diff Staging vs Prod</code>, and <code>Run CSV Batch</code>.</p>
+          </article>
+          <article class="card">
+            <span class="step-num">4</span>
+            <h3>CI Export &amp; Pro Activation</h3>
+            <p>Export standalone zero-lock-in Node CI runners + GitHub Actions YAML, or unlock Pro anytime via <code>ReqBridge: Manage Pro License / Activate Key</code>.</p>
+          </article>
+        </div>
+
+        <div class="tier-split">
+          <article class="card">
+            <span class="solve-tag">Free Core (No Account Needed)</span>
+            <h3>Included Free Forever</h3>
+            <ul class="clean" style="margin-bottom: 0;">
+              <li>Unlimited Postman / Thunder / Bruno / <code>.http</code> &rarr; <code>.http</code> &amp; OpenAPI 3.1 migration</li>
+              <li>Unlimited single-request CodeLens execution inside VS Code</li>
+              <li>Unlimited single-endpoint Staging vs. Prod schema diff</li>
+              <li>CSV Batch Runner trial: up to 10 rows per run, 3 batch runs per day</li>
+            </ul>
+          </article>
+          <article class="card card-highlight">
+            <span class="badge">Pro License ($19 Personal / $29 Team 5-Seat)</span>
+            <h3>Unlocked With One-Time Pro Key</h3>
+            <ul class="clean" style="margin-bottom: 0;">
+              <li>Unlimited CSV / JSON batch rows &amp; unlimited daily runs + JUnit XML / Markdown</li>
+              <li>Collection-wide Staging vs. Prod schema-drift diff suite</li>
+              <li>Zero-lock-in CI bundle exporter (standalone Node runner + GitHub Actions YAML)</li>
+              <li>Optional BYOK <code>pm.test()</code> script translator + offline <code>RB1.</code> / Creem / Gumroad activation</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="why-switch" class="reveal">
+      <div class="container">
+        <div class="eyebrow">Why Developers Are Migrating in 2026</div>
+        <h2>Stop Renting Cloud Accounts Just to Test Local APIs</h2>
+        <p class="section-sub">
+          ReqBridge strips out bloated SaaS workspaces and focuses strictly on the three workflows developers keep hitting paywalls on.
+        </p>
+
+        <div class="grid-3">
+          <article class="card">
+            <span class="pain-tag">Postman &amp; Thunder Client Pain</span>
+            <h3>Mandatory Logins &amp; 50-Run Paywalls</h3>
+            <p>
+              Postman retired its offline Scratch Pad and prices teams at $19/user/mo. Thunder Client v3.0.0 now mandates a free account login
+              and caps free users at 50 requests/collection and 50 runner executions/mo—locking CSV data runs, Git sync, and WSL behind paid seats.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="pain-tag">Manual Migration Pain</span>
+            <h3>Broken Auth &amp; Export Stack Traces</h3>
+            <p>
+              Hand-converting Postman v2.1 JSON, Thunder Client exports, or Bruno <code>.bru</code> directories into plain <code>.http</code> or OpenAPI 3.1 often drops
+              collection-level Bearer/API-Key inheritance, query parameters, and <code>pm.test()</code> assertions silently.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="solve-tag">ReqBridge Unbundled Fix</span>
+            <h3>One-Time Local Tool Inside VS Code</h3>
+            <p>
+              Deterministic parser + local Node <code>fetch</code> runner + Git-friendly schema diff in one clean extension. Optional BYOK helper only if you
+              explicitly enable AI translation for complex custom JavaScript <code>pm.test()</code> scripts.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="reveal">
+      <div class="container">
+        <div class="eyebrow">Honest Side-by-Side Comparison</div>
+        <h2>How ReqBridge Stacks Up Against Existing API Clients</h2>
+        <p class="section-sub">Built to complement Git and plain <code>.http</code> files—not trap your team in another recurring per-seat SaaS.</p>
+
+        <div class="compare-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th class="col-hl">ReqBridge Local API</th>
+                <th>Postman Team</th>
+                <th>Thunder Client Pro</th>
+                <th>Bruno (OSS)</th>
+                <th>REST Client (.http)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pricing Model</td>
+                <td class="col-hl">$19 Personal / $29 5-Seat (One-time)</td>
+                <td>$19 / user / month</td>
+                <td>$3–$16 / user / month</td>
+                <td>Free OSS (Pro USD 6/user/mo)</td>
+                <td>Free OSS</td>
+              </tr>
+              <tr>
+                <td>Works Without Cloud Login</td>
+                <td class="col-hl"><span class="chk-yes">✓ Zero Login</span></td>
+                <td><span class="chk-no">✕ Cloud Account Required</span></td>
+                <td><span class="chk-no">✕ Mandatory Login (v3.0.0)</span></td>
+                <td><span class="chk-yes">✓ Local</span></td>
+                <td><span class="chk-yes">✓ Local</span></td>
+              </tr>
+              <tr>
+                <td>Local CSV / JSON Batch Runner</td>
+                <td class="col-hl"><span class="chk-yes">✓ Unlimited (Pro) + JUnit XML</span></td>
+                <td><span class="chk-mid">25/mo on Free</span></td>
+                <td><span class="chk-mid">50/mo on Free (Paid for CSV)</span></td>
+                <td><span class="chk-mid">Paid for some GUI/CI flows</span></td>
+                <td><span class="chk-no">✕ Single request only</span></td>
+              </tr>
+              <tr>
+                <td>Postman / Thunder / .bru &harr; .http / OpenAPI 3.1</td>
+                <td class="col-hl"><span class="chk-yes">✓ Lossless + Auth Inheritance</span></td>
+                <td><span class="chk-no">✕ No .http export</span></td>
+                <td><span class="chk-no">✕ Proprietary format</span></td>
+                <td><span class="chk-mid">OpenAPI export issues reported</span></td>
+                <td><span class="chk-no">✕ Manual conversion</span></td>
+              </tr>
+              <tr>
+                <td>Staging vs. Prod JSON Diff</td>
+                <td class="col-hl"><span class="chk-yes">✓ Structural + Status + Latency</span></td>
+                <td><span class="chk-no">✕ Manual comparison</span></td>
+                <td><span class="chk-no">✕ Not built-in</span></td>
+                <td><span class="chk-no">✕ Not built-in</span></td>
+                <td><span class="chk-no">✕ Raw text only</span></td>
+              </tr>
+              <tr>
+                <td>Air-Gapped &amp; WSL Support</td>
+                <td class="col-hl"><span class="chk-yes">✓ Full Local / WSL</span></td>
+                <td><span class="chk-no">✕ Cloud sync friction</span></td>
+                <td><span class="chk-mid">WSL behind paid tier</span></td>
+                <td><span class="chk-yes">✓ Local</span></td>
+                <td><span class="chk-yes">✓ Local</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture" class="reveal">
+      <div class="container">
+        <div class="eyebrow">Privacy-First Local Architecture</div>
+        <h2>Your Tokens &amp; Payloads Never Touch Our Servers</h2>
+        <p class="section-sub">Because there is no collection backend to maintain, you pay once instead of funding someone else's cloud storage bill.</p>
+
+        <div class="arch-card">
+          <div class="arch-flow">
+            <div class="arch-node">
+              <div class="arch-node-title">1. Local Input Files</div>
+              <p class="arch-node-desc"><code>collection.json</code>, <code>.bru</code> folders, and <code>.env</code> secrets stay strictly on your local disk or WSL workspace.</p>
+            </div>
+            <div class="arch-node highlight">
+              <div class="arch-node-title">2. Deterministic VS Code Engine</div>
+              <p class="arch-node-desc">Local AST transpiler, Node <code>fetch</code> batch runner, and schema diff execute in-process with zero telemetry or cloud storage.</p>
+            </div>
+            <div class="arch-node">
+              <div class="arch-node-title">3. Optional BYOK Translation</div>
+              <p class="arch-node-desc">If you opt in to translate complex <code>pm.test()</code> JS logic, requests go straight from your machine using your own SecretStorage API key.</p>
+            </div>
+            <div class="arch-node">
+              <div class="arch-node-title">4. Dual Offline / Online License</div>
+              <p class="arch-node-desc">Supports offline Ed25519 <code>RB1.</code> license keys (0 network calls) or Creem / Gumroad activation stored in <code>vscode.SecretStorage</code>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="reveal">
+      <div class="container">
+        <div class="eyebrow">Transparent One-Time Pricing</div>
+        <h2>Pay Once. Own Your Workflow Forever.</h2>
+        <p class="section-sub">
+          Start free with the VS Code Free Core tier, or unlock unlimited batch runs, collection-wide diffs, and CI export via Creem (global USD) or Mianbaoduo (Mainland China RMB).
+        </p>
+
+        <div class="grid-2">
+          <article class="card card-highlight">
+            <span class="badge">Early-Access Offer · Save $10</span>
+            <h3>Personal Early-Access License</h3>
+            <div class="price">$19 <span>one-time (standard $29)</span></div>
+            <ul class="clean">
+              <li>Lossless Postman v2.1 / Thunder / Bruno / <code>.http</code> / OpenAPI 3.1 converter</li>
+              <li>Unlimited local CSV &amp; JSON data-driven batch runner + JUnit XML</li>
+              <li>Collection-wide staging vs. prod JSON schema &amp; latency diff</li>
+              <li>Standalone Node CI runner + GitHub Actions workflow export</li>
+              <li>Activate on up to 3 personal machines (Windows / macOS / Linux / WSL)</li>
+              <li>14-day no-questions-asked refund guarantee</li>
+            </ul>
+            <a class="btn btn-primary" href="checkout-personal.html">Unlock Personal Pro — $19</a>
+          </article>
+
+          <article class="card">
+            <span class="badge">For Small Engineering Teams</span>
+            <h3>Team 5-Seat Pack</h3>
+            <div class="price">$29 <span>one-time (standard $49)</span></div>
+            <ul class="clean">
+              <li>Everything in Personal for up to 5 developers (15 total devices)</li>
+              <li>Shared Git-native <code>.http</code> conventions &amp; JUnit CI presets</li>
+              <li>Optional BYOK <code>pm.test()</code> script assistant across all 5 seats</li>
+              <li>12 months of updates + permanent offline fallback</li>
+              <li>Clean VAT invoice receipt via Creem (Merchant of Record)</li>
+              <li>14-day no-questions-asked refund guarantee</li>
+            </ul>
+            <a class="btn btn-secondary" href="checkout-team.html">Unlock Team 5-Seat Pack — $29</a>
+          </article>
+        </div>
+
+        <div class="roi-strip">
+          <strong>Sanity Check:</strong> A 5-developer team on Postman Team pays <strong>$1,140/year</strong>; Thunder Client Business costs <strong>$420/year</strong>.
+          The ReqBridge Team 5-Seat Pack is <strong>$29 one-time</strong>—paid back in a single afternoon of migration time saved.
+        </div>
+
+        <details class="fallback-preview" style="margin-top: 16px;">
+          <summary>Checkout Channel &amp; Instant Activation Details</summary>
+          <p>
+            Free Core features are available immediately via the VS Code Marketplace and GitHub Releases <code>.vsix</code>.
+            Hosted MoR payment links (Creem / Mianbaoduo / Gumroad) are activating on the checkout pages—you can reserve your $19 / $29 early-bird rate
+            or test offline <code>RB1.</code> license key inspection directly on <a href="checkout-personal.html">Personal Checkout</a> or
+            email <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a>.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <section id="faq" class="reveal">
+      <div class="container">
+        <div class="eyebrow">Frequently Asked Questions</div>
+        <h2>Developer Details &amp; Policies</h2>
+        <p class="section-sub">Straight answers without marketing fluff.</p>
+
+        <details class="faq-item">
+          <summary>Do my Postman collections, auth tokens, or payloads leave my machine?</summary>
+          <p>No. Parsing, conversion, batch execution, and schema diffing execute 100% locally inside your browser or VS Code. Offline <code>RB1.</code> keys verify locally with zero network calls; online keys send only your key and anonymized machine ID.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What happens after 12 months of updates? Will my extension stop working?</summary>
+          <p>No. Both the $19 Personal License and $29 Team 5-Seat Pack are one-time purchases with zero auto-renewal. After 12 months, your installed extension keeps working permanently in offline mode.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Does it work inside WSL, Dev Containers, and Remote-SSH?</summary>
+          <p>Yes. Unlike tools that put WSL/Remote behind recurring business tiers, ReqBridge runs cleanly inside local Windows, macOS, Linux, WSL, and Remote-SSH workspaces.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why does ReqBridge offer optional BYOK instead of charging a monthly AI fee?</summary>
+          <p>95% of collection conversion, batch running, and JSON schema diffing is deterministic and needs zero AI. For edge cases with heavy custom JavaScript inside <code>pm.test()</code>, plugging in your own OpenAI/Gemini/compatible key avoids SaaS token markups completely.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How many machines can I activate and how do I move seats?</summary>
+          <p>Each Personal seat activates on up to 3 personal devices (Team 5-Seat supports up to 15 devices). You can switch keys anytime via <code>ReqBridge: Manage Pro License / Activate Key</code> in the Command Palette.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I get a refund or contact support quickly?</summary>
+          <p>Every purchase includes a 14-day no-questions-asked refund guarantee. Email <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a> with your order ID and we reply within 3 business days.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>
+          <strong>ReqBridge Local API</strong> · Support:
+          <a href="mailto:soulkey529@gmail.com">soulkey529@gmail.com</a>
+        </div>
+        <div class="footer-links">
+          <a href="postman-to-http.html">Postman to .http</a>
+          <a href="thunder-client-alternative.html">Thunder Client Alternative</a>
+          <a href="openapi-to-http.html">OpenAPI to .http</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="refund.html">Refund Policy</a>
+        </div>
+      </div>
+      <p class="disclaimer">
+        Independent productivity software. Not affiliated with, endorsed by, or sponsored by Postman, Thunder Client, Bruno, or Microsoft Visual Studio Code.
+      </p>
+    </div>
+  </footer>
+
+  <script src="demo.js" defer></script>
+</body>
+</html>

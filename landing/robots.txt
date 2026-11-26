@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://reqbridge-local-api.pages.dev/sitemap.xml
